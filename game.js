@@ -10,6 +10,7 @@ function setup() {
 }
 
 function pickLocation() {
+	// create 'grid' cell
 	var cols = floor(width/scl);
 	var rows = floor(height/scl);
 	food = createVector(
@@ -23,6 +24,11 @@ function draw() {
 	background(51);
 	s.update();
 	s.show();
+
+	if ( s.eat(food) ) {
+		pickLocation();
+	}
+
 
 	fill(255, 0, 100);
 	rect(food.x, food.y, scl, scl);

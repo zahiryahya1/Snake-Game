@@ -9,6 +9,7 @@ function setup() {
 	pickLocation();
 }
 
+
 function pickLocation() {
 	// create 'grid' cell
 	var cols = floor(width/scl);
@@ -20,9 +21,6 @@ function pickLocation() {
 	food.mult(scl);
 }
 
-function mousePressed() {
-	s.total++;
-}
 
 function draw() {
 	background(51);
@@ -38,17 +36,22 @@ function draw() {
 
 	fill(255, 0, 100);
 	rect(food.x, food.y, scl, scl);
-
 }
 
+
 function keyPressed() {
-	if (keyCode === UP_ARROW) {
+		console.log(s.direction);
+	if (keyCode === UP_ARROW && s.direction !== "DOWN") {
+		s.direction = "UP";
 		s.dir(0, -1);
-	} else if (keyCode === DOWN_ARROW) {
+	} else if (keyCode === DOWN_ARROW && s.direction !== "UP") {
+		s.direction = "DOWN";
 		s.dir(0, 1);
-	} else if (keyCode === LEFT_ARROW) {
+	} else if (keyCode === LEFT_ARROW && s.direction !== "RIGHT") {
+		s.direction = "LEFT";
 		s.dir(-1, 0);
-	} else if (keyCode === RIGHT_ARROW) {
+	} else if (keyCode === RIGHT_ARROW && s.direction !== "LEFT") {
+		s.direction = "RIGHT";
 		s.dir(1, 0);
 	}
 }

@@ -5,6 +5,7 @@ function Snake() {
 	this.yspeed = 0;
 	this.total = 0;
 	this.tail = [];
+	this.direction = "RIGHT";
 
 
 	this.dir = function(x, y) {

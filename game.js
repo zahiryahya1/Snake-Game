@@ -20,8 +20,14 @@ function pickLocation() {
 	food.mult(scl);
 }
 
+function mousePressed() {
+	s.total++;
+}
+
 function draw() {
 	background(51);
+
+	s.death();
 	s.update();
 	s.show();
 

@@ -24,6 +24,21 @@ function Snake() {
 	}
 
 
+	this.death = function() {
+		// if the head ever intersects the body, game over
+		for ( var i = 0; i < this.tail.length; i++) {
+			var pos = this.tail[i];
+			var d = dist(this.x, this.y, pos.x, pos.y);
+			
+			if (d < 1) {
+				console.log("start over");
+				this.total = 0;
+				this.tail = [];
+			}
+		}
+	}
+
+
 	this.update = function() {
 		// add to the tail if a food is eaten,
 		// basically when total 

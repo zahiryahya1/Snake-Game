@@ -6,10 +6,12 @@ function Snake() {
 	this.total = 0;
 	this.tail = [];
 
+
 	this.dir = function(x, y) {
 		this.xspeed = x;
 		this.yspeed = y;
 	}
+
 
 	this.eat = function(pos) {
 		var d = dist(this.x, this.y, pos.x, pos.y);
@@ -21,13 +23,16 @@ function Snake() {
 		}
 	}
 
+
 	this.update = function() {
 		// add to the tail if a food is eaten,
 		// basically when total 
-		for (var i = 0; i < this.tail.length - 1; i++) {
-			this.tail[i] = this.tail[i+1];
+		if ( this.total === this.tail.length) {
+			for (var i = 0; i < this.tail.length - 1; i++) {
+				this.tail[i] = this.tail[i+1];
+			}
 		}
-		this.tail[this.total-1] = createVector(this.x, this.y);
+		this.tail[this.total - 1] = createVector(this.x, this.y);
 
 
 		this.x = this.x + this.xspeed*scl;
@@ -37,6 +42,7 @@ function Snake() {
 		this.x = constrain(this.x, 0, width-scl);
 		this.y = constrain(this.y, 0, height-scl);
 	}
+
 
 	this.show = function() {
 		fill(255);

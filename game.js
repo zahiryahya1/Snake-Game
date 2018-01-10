@@ -25,7 +25,7 @@ function pickLocation() {
 		floor(foodx), 
 		floor(foody)
 	);
-	
+
 	food.mult(scl);
 }
 
@@ -43,7 +43,7 @@ function draw() {
 		pickLocation();
 	}
 
-
+	// draw food
 	fill(255, 0, 100);
 	rect(food.x, food.y, scl, scl);
 }
@@ -62,6 +62,11 @@ function keyPressed() {
 	} else if (keyCode === RIGHT_ARROW && s.direction !== "LEFT") {
 		s.direction = "RIGHT";
 		s.dir(1, 0);
+	}
+
+	if (keyCode == 82) { // 82 is ascii for 'r' to reset game
+		s.reset();
+		pickLocation();
 	}
 }
 

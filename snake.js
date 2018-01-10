@@ -33,8 +33,7 @@ function Snake() {
 			
 			if (d < 1) {
 				console.log("start over");
-				this.total = 0;
-				this.tail = [];
+				this.reset();
 			}
 		}
 	}
@@ -68,5 +67,15 @@ function Snake() {
 		}
 
 		rect(this.x, this.y, scl, scl);
+	}
+
+	this.reset = function() {
+	this.x = 40;
+	this.y = 40;
+	this.xspeed = 1;
+	this.yspeed = 0;
+	this.total = 0;
+	this.tail = [];
+	this.direction = "RIGHT";
 	}
 }

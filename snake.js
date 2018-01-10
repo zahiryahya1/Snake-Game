@@ -6,6 +6,7 @@ function Snake() {
 	this.total = 0;
 	this.tail = [];
 	this.direction = "RIGHT";
+	this.scl = 20;
 
 
 	this.dir = function(x, y) {
@@ -36,6 +37,12 @@ function Snake() {
 				this.reset();
 			}
 		}
+		console.log("x: " + this.x + "y: " + this.y);
+		console.log("x edge: " + width-(this.scl/2) + "y edge: " + height-(this.scl/2));
+		if (this.x === (width-scl) || this.y === (height-scl)  ||
+			this.x === 0 || this.y === 0) {
+			this.reset();
+		}
 	}
 
 
@@ -54,8 +61,8 @@ function Snake() {
 		this.y = this.y + this.yspeed*scl;
 
 		// keeps snake within canvas
-		this.x = constrain(this.x, scl, width-scl-scl);
-		this.y = constrain(this.y, scl, height-scl-scl);
+		this.x = constrain(this.x, 0, width-scl);
+		this.y = constrain(this.y, 0, height-scl);
 	}
 
 

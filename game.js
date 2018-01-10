@@ -1,12 +1,37 @@
 var s;
 var scl = 20;
 var food;
+var gameState = "init";
 
 function setup() {
 	createCanvas(600, 400);
 	s = new Snake();
 	frameRate(10);
 	pickLocation();
+
+}
+
+function initGame() {
+	var name = 'Snake Game';
+	textSize(50);
+ 	fill(255);
+  	nameWidht = textWidth(name);
+  	text(name, (width - nameWidht)/2, height/2 - 40);
+  	startBtn = createButton('Start Game');
+  	startBtn.position(width/2 - startBtn.width/2, height/2);
+  	startBtn.mousePressed(startGame);
+  	//noLoop();
+}
+
+function startGame() {
+	gameState = 'play';
+ 	//snake = new Snake();
+ 	pickLocation();
+}
+
+
+function runGame() {
+
 }
 
 

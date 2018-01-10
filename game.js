@@ -1,17 +1,18 @@
-var s;
+var snake;
 var scl = 20;
 var food;
+var highscore = 0;
 var gameState = "init";
+
 
 function setup() {
 	createCanvas(600, 400);
-	s = new Snake();
 	frameRate(10);
-	pickLocation();
-
 }
 
+
 function initGame() {
+	background(51);
 	var name = 'Snake Game';
 	textSize(50);
  	fill(255);
@@ -20,18 +21,48 @@ function initGame() {
   	startBtn = createButton('Start Game');
   	startBtn.position(width/2 - startBtn.width/2, height/2);
   	startBtn.mousePressed(startGame);
-  	//noLoop();
+  	snake = new Snake();
+  	noLoop();
 }
 
+
 function startGame() {
+	removeElements(); // removes the start game menu elements
 	gameState = 'play';
- 	//snake = new Snake();
+	snake.reset();
  	pickLocation();
+ 	loop();
 }
 
 
 function runGame() {
+	background(51);
+	
+  	textSize(12);
+  	fill(255);
+  	text("score: " + snake.tail.length, 1+scl, 10+scl);
+  	text("highscore: " + highscore, 1+scl, 24+scl);
 
+	snake.update();
+
+	// updates high score
+	if (snake.total > highscore) {
+		highscore = snake.total;
+	}
+
+	snake.show();
+	if ( snake.isDead() )
+		gameState = "end";	
+
+	if ( snake.eat(food) ) {
+		pickLocation();
+	}
+
+	// draw food
+	fill(255, 0, 100);
+	rect(food.x, food.y, scl, scl);
+
+	drawBorder();
 }
 
 
@@ -55,42 +86,53 @@ function pickLocation() {
 }
 
 
+function endGame(){
+  background(51);
+  textSize(32);
+  var msg = 'Game Over';
+  var score = 'Your Score is ' + snake.tail.length;
+  msgWidht = textWidth(msg);
+  scoreWidht = textWidth(score);
+  fill(255);
+  text(msg, (width - msgWidht)/2, height/2 - 40);
+  text(score, (width - scoreWidht)/2, height/2);
+  startBtn = createButton('Restart Game');
+  startBtn.position(width/2 - startBtn.width/2, height/2 + 40);
+  startBtn.mousePressed(startGame);
+  noLoop();
+}
+
 function draw() {
-	background(51);
 
-	drawBorder();
-
-	s.death();
-	s.update();
-	s.show();
-
-	if ( s.eat(food) ) {
-		pickLocation();
+	if (gameState =='init') {
+		initGame();
 	}
-
-	// draw food
-	fill(255, 0, 100);
-	rect(food.x, food.y, scl, scl);
+	else if (gameState == 'play') {
+		runGame();
+	}
+	else if (gameState == 'end') {
+		endGame();
+	}
 }
 
 
 function keyPressed() {
-	if (keyCode === UP_ARROW && s.direction !== "DOWN") {
-		s.direction = "UP";
-		s.dir(0, -1);
-	} else if (keyCode === DOWN_ARROW && s.direction !== "UP") {
-		s.direction = "DOWN";
-		s.dir(0, 1);
-	} else if (keyCode === LEFT_ARROW && s.direction !== "RIGHT") {
-		s.direction = "LEFT";
-		s.dir(-1, 0);
-	} else if (keyCode === RIGHT_ARROW && s.direction !== "LEFT") {
-		s.direction = "RIGHT";
-		s.dir(1, 0);
+	if (keyCode === UP_ARROW && snake.direction !== "DOWN") {
+		snake.direction = "UP";
+		snake.dir(0, -1);
+	} else if (keyCode === DOWN_ARROW && snake.direction !== "UP") {
+		snake.direction = "DOWN";
+		snake.dir(0, 1);
+	} else if (keyCode === LEFT_ARROW && snake.direction !== "RIGHT") {
+		snake.direction = "LEFT";
+		snake.dir(-1, 0);
+	} else if (keyCode === RIGHT_ARROW && snake.direction !== "LEFT") {
+		snake.direction = "RIGHT";
+		snake.dir(1, 0);
 	}
 
 	if (keyCode == 82) { // 82 is ascii for 'r' to reset game
-		s.reset();
+		snake.reset();
 		pickLocation();
 	}
 }

@@ -26,23 +26,23 @@ function Snake() {
 	}
 
 
-	this.death = function() {
+	this.isDead = function() {
 		// if the head ever intersects the body, game over
 		for ( var i = 0; i < this.tail.length; i++) {
 			var pos = this.tail[i];
 			var d = dist(this.x, this.y, pos.x, pos.y);
 			
 			if (d < 1) {
-				console.log("start over");
-				this.reset();
+				// hits it self
+				return true;
 			}
 		}
-		console.log("x: " + this.x + "y: " + this.y);
-		console.log("x edge: " + width-(this.scl/2) + "y edge: " + height-(this.scl/2));
+		// hits border
 		if (this.x === (width-scl) || this.y === (height-scl)  ||
 			this.x === 0 || this.y === 0) {
-			this.reset();
+			return true;
 		}
+		return false;
 	}
 
 

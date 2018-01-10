@@ -1,4 +1,5 @@
 var snake;
+var food;
 var scl = 20;
 var food;
 var highscore = 0;
@@ -22,6 +23,7 @@ function initGame() {
   	startBtn.position(width/2 - startBtn.width/2, height/2);
   	startBtn.mousePressed(startGame);
   	snake = new Snake();
+  	food = new food(scl);
   	noLoop();
 }
 
@@ -30,7 +32,7 @@ function startGame() {
 	removeElements(); // removes the start game menu elements
 	gameState = 'play';
 	snake.reset();
- 	pickLocation();
+ 	food.spawn();
  	loop();
 }
 
@@ -51,38 +53,16 @@ function runGame() {
 	}
 
 	snake.show();
+	food.show();
+
 	if ( snake.isDead() )
 		gameState = "end";	
 
 	if ( snake.eat(food) ) {
-		pickLocation();
+		food.spawn()	
 	}
 
-	// draw food
-	fill(255, 0, 100);
-	rect(food.x, food.y, scl, scl);
-
 	drawBorder();
-}
-
-
-function pickLocation() {
-
-	// create 'grid' cell
-	var cols = floor(width/scl);
-	var rows = floor(height/scl);
-
-	// choose a cell within 0 and n, not including edges
- 	var foodx = floor(Math.random()*((cols-1) - 1) + 1);
- 	var foody =  floor(Math.random()*((rows-1) - 1) + 1);
-
-
-	food = createVector(
-		floor(foodx), 
-		floor(foody)
-	);
-
-	food.mult(scl);
 }
 
 

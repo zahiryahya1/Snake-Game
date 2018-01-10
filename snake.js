@@ -15,8 +15,8 @@ function Snake() {
 	}
 
 
-	this.eat = function(pos) {
-		var d = dist(this.x, this.y, pos.x, pos.y);
+	this.eat = function(food) {
+		var d = dist(this.x, this.y, food.x, food.y);
 		if ( d < 1) {
 			this.total++;
 			return true;

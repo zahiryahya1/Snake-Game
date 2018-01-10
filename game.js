@@ -4,6 +4,7 @@ var scl = 20;
 var food;
 var highscore = 0;
 var gameState = "init";
+var pause = false;
 
 
 function setup() {
@@ -97,23 +98,34 @@ function draw() {
 
 
 function keyPressed() {
-	if (keyCode === UP_ARROW && snake.direction !== "DOWN") {
+	if (keyCode === 87 && snake.direction !== "DOWN") {
 		snake.direction = "UP";
 		snake.dir(0, -1);
-	} else if (keyCode === DOWN_ARROW && snake.direction !== "UP") {
+	} else if (keyCode === 83 && snake.direction !== "UP") {
 		snake.direction = "DOWN";
 		snake.dir(0, 1);
-	} else if (keyCode === LEFT_ARROW && snake.direction !== "RIGHT") {
+	} else if (keyCode === 65 && snake.direction !== "RIGHT") {
 		snake.direction = "LEFT";
 		snake.dir(-1, 0);
-	} else if (keyCode === RIGHT_ARROW && snake.direction !== "LEFT") {
+	} else if (keyCode === 68 && snake.direction !== "LEFT") {
 		snake.direction = "RIGHT";
 		snake.dir(1, 0);
 	}
 
 	if (keyCode == 82) { // 82 is ascii for 'r' to reset game
 		snake.reset();
-		pickLocation();
+		food.spawn();
+	}
+
+	if (keyCode == 80) { // 80 is ascii for 'p' to puase game
+		if (pause == false) {
+			pause = true;		
+			noLoop();
+		}
+		else {
+			pause = false;
+			loop();
+		}
 	}
 }
 
@@ -135,5 +147,4 @@ function drawBorder() {
 	for (var i = 0; i < floor(height/scl); i++ ) {
 		rect(width-scl, scl*i, scl, scl);
 	}
-	
 }

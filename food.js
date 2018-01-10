@@ -4,6 +4,7 @@ function food(scale) {
 	this.scl = scale;
 
 
+	// need to make sure the food does not spawn in the snake
 	this.spawn = function() {
 
 		// create 'grid' cell
@@ -13,9 +14,6 @@ function food(scale) {
 		// choose a cell within 0 and n, not including edges
 	 	this.x = floor(Math.random()*((cols-1) - 1) + 1) * scl;
 	 	this.y =  floor(Math.random()*((rows-1) - 1) + 1) * scl;
-
-
-		//food.mult(scl);
 	}
 
 

@@ -3,7 +3,7 @@ var scl = 20;
 var food;
 
 function setup() {
-	createCanvas(600, 600);
+	createCanvas(600, 400);
 	s = new Snake();
 	frameRate(10);
 	pickLocation();
@@ -11,19 +11,29 @@ function setup() {
 
 
 function pickLocation() {
+
 	// create 'grid' cell
 	var cols = floor(width/scl);
 	var rows = floor(height/scl);
+
+	// choose a cell within 0 and n, not including edges
+ 	var foodx = floor(Math.random()*((cols-1) - 1) + 1);
+ 	var foody =  floor(Math.random()*((rows-1) - 1) + 1);
+
+
 	food = createVector(
-		floor(random(cols)), 
-		floor(random(rows) 
-	));
+		floor(foodx), 
+		floor(foody)
+	);
+	
 	food.mult(scl);
 }
 
 
 function draw() {
 	background(51);
+
+	drawBorder();
 
 	s.death();
 	s.update();
@@ -40,7 +50,6 @@ function draw() {
 
 
 function keyPressed() {
-		console.log(s.direction);
 	if (keyCode === UP_ARROW && s.direction !== "DOWN") {
 		s.direction = "UP";
 		s.dir(0, -1);
@@ -54,4 +63,25 @@ function keyPressed() {
 		s.direction = "RIGHT";
 		s.dir(1, 0);
 	}
+}
+
+function drawBorder() {
+	fill(100, 50, 30);
+
+	for (var i = 0; i < floor(width/scl); i++ ) {
+		rect(scl*i, 0, scl, scl);
+	}
+
+	for (var i = 0; i < floor(height/scl); i++ ) {
+		rect(0, scl*i, scl, scl);
+	}
+
+	for (var i = 0; i < floor(width/scl); i++ ) {
+		rect(scl*i, height-scl, scl, scl);
+	}
+
+	for (var i = 0; i < floor(height/scl); i++ ) {
+		rect(width-scl, scl*i, scl, scl);
+	}
+	
 }
